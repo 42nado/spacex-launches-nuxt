@@ -5,7 +5,7 @@
 			Starter Template
 		</h2>
 		<h5>Nuxt 3 / Vuetify / Graphql / Pinia</h5>
-		<NuxtLink to="/rockets">Go to rockets</NuxtLink>
+		<NuxtLink to="/">Go to HomePage</NuxtLink>
 		<h3 class="my-5">
 			Example Pinia
 			<v-chip color="blue">useCounter</v-chip>
@@ -99,7 +99,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue' // Make sure to import the necessary dependencies here
-
+// const route = useRoute()
 const store = useCounter()
 const selection = ref(0)
 const query = gql`
