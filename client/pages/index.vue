@@ -1,11 +1,10 @@
 <template>
 	<v-container>
-		<h2>
+		<!-- <h2>
 			<v-icon icon="mdi-vuetify" />
 			Starter Template
 		</h2>
 		<h5>Nuxt 3 / Vuetify / Graphql / Pinia</h5>
-		<NuxtLink to="/rockets">Go to rockets</NuxtLink>
 		<h3 class="my-5">
 			Example Pinia
 			<v-chip color="blue">useCounter</v-chip>
@@ -24,20 +23,20 @@
 			</v-card-item>
 
 			<v-card-actions><v-btn color="blue" @click="store.increment()">Increment</v-btn></v-card-actions>
-		</v-card>
+		</v-card> -->
 
-		<h3 class="my-5">
+		<!-- <h3 class="my-5">
 			Example Vuetify
 			<v-chip color="blue">Card</v-chip>
-		</h3>
-		<v-card v-for="rocket in rockets" :key="rocket.name" class="mx-auto my-4" max-width="374">
+		</h3> -->
+		<v-card v-for="launch in launches" :key="launch.mission_name" class="mx-auto my-4">
 			<template #progress>
 				<v-progress-linear color="deep-purple" height="10" indeterminate />
 			</template>
 
-			<v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" />
+			<!-- <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" /> -->
 
-			<v-card-title>{{ rocket.name }}</v-card-title>
+			<v-card-title>{{ launch.mission_name }}</v-card-title>
 
 			<v-card-text>
 				<!-- <v-row align="center" class="mx-0">
@@ -46,16 +45,16 @@
 					<div class="grey--text ms-4">4.5 (413)</div>
 				</v-row> -->
 
-				<div class="my-4 text-subtitle-1">{{ rocket.first_flight }}</div>
-				<div class="my-4 text-subtitle-1">{{ rocket.height.kg }}</div>
+				<div class="my-4 text-subtitle-1">Launch Date: {{ launch.launch_date_local }}</div>
+				<div class="my-4 text-subtitle-1">Launch Site:{{ launch.launch_site }}</div>
 				<div>
-					{{ rocket.description }}
+					{{ launch.details }}
 				</div>
 			</v-card-text>
 
 			<v-divider class="mx-4" />
 
-			<v-card-title>Tonight's availability</v-card-title>
+			<v-card-title>{{ launch.rocket.rocket_name }}</v-card-title>
 
 			<v-card-text>
 				<v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
@@ -70,15 +69,15 @@
 			</v-card-text>
 
 			<v-card-actions>
-				<v-btn color="deep-purple lighten-2">Reserve</v-btn>
+				<v-btn color="deep-purple lighten-2">Favorites</v-btn>
 			</v-card-actions>
 		</v-card>
-		<h3 class="my-5">
+		<!-- <h3 class="my-5">
 			Example Vuetify
 			<v-chip color="blue">SimpleTable</v-chip>
 			<v-chip color="orange">Data from spaceX graphql</v-chip>
-		</h3>
-		<p>There are {{ ships?.length || 0 }} ships.</p>
+		</h3> -->
+		<!-- <p>There are {{ ships?.length || 0 }} ships.</p>
 		<v-table>
 			<thead>
 				<tr>
@@ -94,76 +93,63 @@
 					</td>
 				</tr>
 			</tbody>
-		</v-table>
+		</v-table> -->
 	</v-container>
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue' // Make sure to import the necessary dependencies here
 
-const store = useCounter()
+// const store = useCounter()
 const selection = ref(0)
-const query = gql`
-	query getShips {
-		ships {
-			id
-			name
-			active
-		}
-	}
-`
+// const query = gql`
+// 	query getShips {
+// 		ships {
+// 			id
+// 			name
+// 			active
+// 		}
+// 	}
+// `
 
 const query2 = gql`
-	query getRockets {
-		rockets {
-			name
-			diameter {
-				feet
-				meters
+	query Launches {
+		launches {
+			mission_name
+			launch_date_local
+			launch_site {
+				site_name
+				site_name_long
 			}
-			description
-			first_flight
-			mass {
-				kg
-				lb
+			rocket {
+				rocket_name
 			}
-			height {
-				meters
-				feet
-			}
-			stages
+			details
 		}
 	}
 `
+// const { data } = useAsyncQuery<{
+// 	ships: {
+// 		id: string
+// 		name: string
+// 		active: boolean
+// 	}[]
+// }>(query)
 
-const { data } = useAsyncQuery<{
-	ships: {
-		id: string
-		name: string
-		active: boolean
-	}[]
-}>(query)
-
-const { data: rocketData } = useAsyncQuery<{
-	rockets: {
-		name: string
-		diameter: {
-			feet: number
-			meters: number
+const { data: launchesData } = useAsyncQuery<{
+	launches: {
+		mission_name: string
+		launch_date_local: Date
+		launch_site: {
+			site_name: string
+			site_name_long: string
 		}
-		description: string
-		first_flight: string
-		mass: {
-			kg: number
-			lb: number
+		rocket: {
+			rocket_name: string
 		}
-		height: {
-			meters: number
-			feet: number
-		}
-		stages: number
+		details: string
 	}[]
 }>(query2)
 
-const ships = computed(() => data.value?.ships ?? [])
-const rockets = computed(() => rocketData.value?.rockets ?? [])
+// const ships = computed(() => data.value?.ships ?? [])
+const launches = computed(() => launchesData.value?.launches ?? [])
 </script>

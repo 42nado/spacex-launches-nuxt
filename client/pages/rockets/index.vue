@@ -1,11 +1,10 @@
 <template>
 	<v-container>
-		<h2>
+		<!-- <h2>
 			<v-icon icon="mdi-vuetify" />
 			Starter Template
 		</h2>
 		<h5>Nuxt 3 / Vuetify / Graphql / Pinia</h5>
-		<NuxtLink to="/">Go to HomePage</NuxtLink>
 		<h3 class="my-5">
 			Example Pinia
 			<v-chip color="blue">useCounter</v-chip>
@@ -29,13 +28,13 @@
 		<h3 class="my-5">
 			Example Vuetify
 			<v-chip color="blue">Card</v-chip>
-		</h3>
+		</h3> -->
 		<v-card v-for="rocket in rockets" :key="rocket.name" class="mx-auto my-4" max-width="374">
 			<template #progress>
 				<v-progress-linear color="deep-purple" height="10" indeterminate />
 			</template>
 
-			<v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" />
+			<!-- <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" /> -->
 
 			<v-card-title>{{ rocket.name }}</v-card-title>
 
@@ -46,8 +45,8 @@
 					<div class="grey--text ms-4">4.5 (413)</div>
 				</v-row> -->
 
-				<div class="my-4 text-subtitle-1">{{ rocket.first_flight }}</div>
-				<div class="my-4 text-subtitle-1">{{ rocket.height.kg }}</div>
+				<div class="my-4 text-subtitle-1">First Flight date{{ rocket.first_flight }}</div>
+				<div class="my-4 text-subtitle-1">Launch Site:</div>
 				<div>
 					{{ rocket.description }}
 				</div>
@@ -55,7 +54,7 @@
 
 			<v-divider class="mx-4" />
 
-			<v-card-title>Tonight's availability</v-card-title>
+			<v-card-title>Number</v-card-title>
 
 			<v-card-text>
 				<v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
@@ -70,7 +69,8 @@
 			</v-card-text>
 
 			<v-card-actions>
-				<v-btn color="deep-purple lighten-2">Reserve</v-btn>
+				<v-btn color="deep-purple lighten-2">More Details</v-btn>
+				<v-btn color="deep-purple lighten-2">Favorites</v-btn>
 			</v-card-actions>
 		</v-card>
 		<h3 class="my-5">
@@ -100,7 +100,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue' // Make sure to import the necessary dependencies here
 // const route = useRoute()
-const store = useCounter()
+// const store = useCounter()
 const selection = ref(0)
 const query = gql`
 	query getShips {
