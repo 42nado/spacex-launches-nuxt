@@ -7,8 +7,9 @@
 						SpaceX Graphql API
 					</NuxtLink>
 					<ul class="d-flex">
-						<li><NuxtLink to="/">Launches</NuxtLink></li>
-						<li><NuxtLink to="/rockets">Rockets</NuxtLink></li>
+						<li><NuxtLink to="/" class="text-decoration-none">Launches</NuxtLink></li>
+						<li><NuxtLink to="/rockets" class="text-decoration-none">Rockets</NuxtLink></li>
+						<li><NuxtLink to="/favorites" class="text-decoration-none">Favorites</NuxtLink></li>
 					</ul>
 				</nav>
 			</header>
